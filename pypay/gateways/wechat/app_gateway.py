@@ -4,17 +4,13 @@
 # @author: x.huang
 # @date:28/05/19
 
-from .gateway import Gateway
+from .wechatbase import WechatPayBase
 
 
-class AppGateway(Gateway):
-
-    def pay(self, endpoint, payload):
-        pass
-
-    def pre_order(self, payload):
-        super().pre_order(payload)
+class AppGateway(WechatPayBase):
 
     def get_trade_type(self):
         return 'APP'
 
+    def pay(self, endpoint, payload):
+        pass

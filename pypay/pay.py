@@ -3,8 +3,8 @@
 
 # @author: x.huang
 # @date:28/05/19
-from gateways.wechat.wechatbase import WechatConfig
-from gateways.wechat.wechatbase import WechatPayBase
+from pypay.gateways.wechat.wechatbase import WechatConfig
+from pypay.gateways.wechat.wechatbase import WechatPayBase
 
 
 class Pay:
@@ -16,3 +16,8 @@ class Pay:
     @staticmethod
     def wechat(config: WechatConfig) -> WechatPayBase:
         return WechatPayBase(config)
+
+    def gateway(self, gateway_type):
+
+        if gateway_type == 'app':
+            return

@@ -18,3 +18,7 @@ class TestWechat(unittest.TestCase):
 
     def test_get_sign_key(self):
         self.assertEqual(self.wechat.config.mode, 'normal')
+
+
+if __name__ == '__main__':
+    unittest.main()

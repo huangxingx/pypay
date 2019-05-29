@@ -10,10 +10,8 @@ from enum import Enum
 import collections
 import requests
 
-import err
-from interfaces.GatewayApplicationInterface import GatewayApplicationInterface
-from interfaces.GatewayInterface import GatewayInterface
-from util import xml_et_cdatasection as ET
+from pypay.interfaces.GatewayApplicationInterface import GatewayApplicationInterface
+from pypay.util import xml_et_cdatasection as ET
 
 
 class WechatModeEnum(Enum):
@@ -70,16 +68,20 @@ class WechatPayBase(GatewayApplicationInterface):
             'spbill_create_ip': '',
         }
 
+    def get_trade_type(self):
+        return ''
+
     def pay(self, gateway: str, params: dict):
-        self.payload.update(params)
-        gateway = f'{gateway}.Gateway'
-        try:
-            __import__(gateway, fromlist=['gateways', 'wechat'])
-
-        except ImportError:
-            raise err.InvalidGatewayException(f"Pay Gateway [{gateway}] Not Exists")
-
-        return self._make_pay(gateway)
+        # self.payload.update(params)
+        # gateway = f'{gateway}.Gateway'
+        # try:
+        #     __import__(gateway, fromlist=['gateways', 'wechat'])
+        #
+        # except ImportError:
+        #     raise err.InvalidGatewayException(f"Pay Gateway [{gateway}] Not Exists")
+        #
+        # return self._make_pay(gateway)
+        pass
 
     def find(self, order: dict, refund):
         super().find(order, refund)
