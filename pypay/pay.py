@@ -7,9 +7,6 @@ from pypay import err
 from pypay.gateways.wechat import WechatConfig, WechatPay
 from pypay.gateways.wechat_impl.app_pay_impl import AppPayImpl
 
-ALI = 'ali'
-WECHAT = 'wechat'
-
 
 class Pay:
     wechat_config = None
@@ -20,16 +17,17 @@ class Pay:
         self.config = config
 
     @classmethod
-    def get_instance(cls, driver, gateway):
-        pass
-
-    @classmethod
     def ali(cls, config):
         pass
 
     @classmethod
-    def wechat(cls, config: WechatConfig, impl_type) -> WechatPay:
+    def wechat(cls, config: WechatConfig, impl_type=None) -> WechatPay:
         impl = None
+
+        # 默认返回不带pay方法的实例
+        if impl_type is None:
+            impl = WechatPay
+
         if impl_type == 'app':
             impl = AppPayImpl
 

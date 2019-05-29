@@ -2,28 +2,22 @@
 # -*- coding: utf-8 -*-
 
 # @author: x.huang
-# @date:28/05/19
+# @date:29/05/19
 import time
 
+from pypay import err
 from pypay.gateways.wechat import WechatPay
 
 
-class AppPayImpl(WechatPay):
+class MpPayImpl(WechatPay):
 
-    def get_trade_type(self):
-        return 'APP'
+    @staticmethod
+    def get_trade_type():
+        return 'JSAPI'
 
-    def pay(self, config_biz) -> dict:
-        """
-
-        :param config_biz:
-                - 商品描述	body
-                - 商户订单号	out_trade_no
-                - 总金额	total_fee
-                - 终端IP	spbill_create_ip
-                - 通知地址	notify_url
-        :return:
-        """
+    def pay(self, config_biz: dict):
+        if not self.config.get('app_id'):
+            raise err.InvalidArgumentException('Missing Config -- [app_id]')
 
         _now = time.time()
         prepay_id = self.pre_order(config_biz).get('prepay_id')
@@ -34,7 +28,8 @@ class AppPayImpl(WechatPay):
             'prepayid': prepay_id,
             'timestamp': _now,
             'noncestr': self.gen_nonce_str(),
-            'package': 'Sign=WXPay'
+            'package': f'prepay_id={prepay_id}'
         }
+        pay_dict['paySign'] = self.gen_sign(pay_dict)
 
         return pay_dict

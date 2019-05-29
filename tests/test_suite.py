@@ -7,7 +7,7 @@
 
 import unittest
 
-from . import test_wechat
+from tests import test_wechat
 
 if __name__ == '__main__':
     suite = unittest.TestSuite()

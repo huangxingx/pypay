@@ -188,7 +188,7 @@ class WechatPay(GatewayApplicationInterface):
     def request_api(self, endpoint, data, cert=False):
         url = self.gateway + endpoint
 
-        if not data.get('sing'):
+        if not data.get('sign'):
             data['sign'] = self.gen_sign(data)
 
         # cert 证书问题
@@ -220,5 +220,11 @@ class WechatPay(GatewayApplicationInterface):
 
         if 'trade_type' in self.payload:
             del self.payload['trade_type']
+
+        return True
+
+    def unset_notify_url(self):
+        if 'notify_url' in self.payload:
+            del self.payload['notify_url']
 
         return True
