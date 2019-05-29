@@ -7,11 +7,11 @@
 
 import unittest
 
-from .test_wechat import TestWechat
+from . import test_wechat
 
 if __name__ == '__main__':
     suite = unittest.TestSuite()
-    suite.addTests(unittest.TestLoader().loadTestsFromTestCase(TestWechat))
+    suite.addTests(unittest.TestLoader().loadTestsFromTestCase(test_wechat.TestWechat))
 
     runner = unittest.TextTestRunner(verbosity=2)
 
