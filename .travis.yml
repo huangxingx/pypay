@@ -4,7 +4,11 @@ python:
 
 # command to install dependencies
 install:
+  - pip3 install --user codecov
   - pip3 install pipenv
   - pipenv install
 # command to run tests
 script: python -m unittest tests/test_suite.py
+
+after_success:
+  - codecov

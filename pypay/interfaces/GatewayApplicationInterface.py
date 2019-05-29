@@ -7,23 +7,21 @@
 import abc
 
 
-class GatewayApplicationInterface:
+class GatewayApplicationInterface(metaclass=abc.ABCMeta):
 
     @abc.abstractmethod
-    def pay(self, gateway: str, params: dict):
+    def pay(self, params: dict):
         """ 支付
 
-        :param str gateway: 支付网关
         :param dict params:  支付参数
         :return:
         """
 
     @abc.abstractmethod
-    def find(self, order: dict, refund):
+    def find(self, out_trade_no: str):
         """ 查询订单
 
-        :param order:
-        :param refund:
+        :param out_trade_no:
         :return:
         """
         pass
@@ -47,19 +45,20 @@ class GatewayApplicationInterface:
         pass
 
     @abc.abstractmethod
-    def close(self, order: dict):
+    def close(self, out_trade_no: str):
         """ 关闭订单
 
-        :param order:
+        :param out_trade_no:
         :return:
         """
 
     @abc.abstractmethod
-    def verify(self, content: str, refund):
+    def verify(self, content: str, sign=None, sync=False):
         """ 验证消息内容
 
         :param content:
-        :param refund:
+        :param sync:
+        :param sign:
         :return:
         """
 

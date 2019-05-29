@@ -3,21 +3,37 @@
 
 # @author: x.huang
 # @date:28/05/19
-from pypay.gateways.wechat.wechatbase import WechatConfig
-from pypay.gateways.wechat.wechatbase import WechatPayBase
+from pypay import err
+from pypay.gateways.wechat import WechatConfig, WechatPay
+from pypay.gateways.wechat_impl.app_pay_impl import AppPayImpl
+
+ALI = 'ali'
+WECHAT = 'wechat'
 
 
 class Pay:
+    wechat_config = None
+    ali_config = None
 
-    @staticmethod
-    def alipay(config):
+    def __init__(self, config):
+        self._driver = ''
+        self.config = config
+
+    @classmethod
+    def get_instance(cls, driver, gateway):
         pass
 
-    @staticmethod
-    def wechat(config: WechatConfig) -> WechatPayBase:
-        return WechatPayBase(config)
+    @classmethod
+    def ali(cls, config):
+        pass
 
-    def gateway(self, gateway_type):
+    @classmethod
+    def wechat(cls, config: WechatConfig, impl_type) -> WechatPay:
+        impl = None
+        if impl_type == 'app':
+            impl = AppPayImpl
 
-        if gateway_type == 'app':
-            return
+        if not impl:
+            raise err.InvalidArgumentException(f'Pay Type Arg Error: {impl_type} not exists impl.')
+
+        return impl(config)

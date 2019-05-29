@@ -5,3 +5,4 @@
 # @date:28/05/19
 
 
+from .wechat_impl.app_pay_impl import AppPayImpl
