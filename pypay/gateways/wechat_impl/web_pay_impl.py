@@ -3,9 +3,9 @@
 
 # @author: x.huang
 # @date:29/05/19
-import time
 
-from pypay import err
+from urllib.parse import urlencode
+
 from pypay.gateways.wechat import WechatPay
 
 
@@ -16,5 +16,13 @@ class WebPayImpl(WechatPay):
     def get_trade_type():
         return 'MWEB'
 
-    def pay(self, config_biz: dict):
-        config_biz['trade_type'] = self.get_trade_type()
+    def pay(self, config_biz: dict) -> str:
+        self.check_config('app_id')
+
+        mweb_url = self.pre_order(config_biz).get('mweb_url', '')
+
+        return_url = config_biz.get('return_url') or self.payload.get('return_url')
+        if not return_url:
+            return mweb_url
+
+        return f'{mweb_url}&redirect_url={urlencode(return_url)}'

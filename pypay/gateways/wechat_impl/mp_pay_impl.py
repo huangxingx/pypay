@@ -5,7 +5,6 @@
 # @date:29/05/19
 import time
 
-from pypay import err
 from pypay.gateways.wechat import WechatPay
 
 
@@ -16,8 +15,7 @@ class MpPayImpl(WechatPay):
         return 'JSAPI'
 
     def pay(self, config_biz: dict):
-        if not self.config.get('app_id'):
-            raise err.InvalidArgumentException('Missing Config -- [app_id]')
+        self.check_config('app_id')
 
         _now = time.time()
         prepay_id = self.pre_order(config_biz).get('prepay_id')

@@ -61,7 +61,7 @@ class WechatPay(GatewayApplicationInterface):
         self.gateway = self.URL.get(self.config.mode)
 
         self.payload = {
-            'appid': self.config.appid,
+            'appid': self.config.app_id,  # 公众号 app_id
             'mch_id': self.config.mch_id,
             'nonce_str': self.gen_nonce_str(),
             'sign_type': 'MD5',
@@ -70,6 +70,10 @@ class WechatPay(GatewayApplicationInterface):
         }
 
         self.set_dev_key()
+
+    def check_config(self, arg):
+        if arg not in self.config:
+            raise err.InvalidArgumentException(f'Missing Config -- [{arg}]')
 
     @staticmethod
     def get_trade_type():
