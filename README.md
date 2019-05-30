@@ -5,6 +5,8 @@
 
  Ali Pay And Wechat Pay With Python.
 
+ 项目移植于 [yansongda/pay](https://github.com/yansongda/pay)
+
 ## 功能
 ### 1、支付宝
 <!-- - 电脑支付  -->
